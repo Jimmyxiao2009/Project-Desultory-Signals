@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- netstandard1.4 is chosen for the same reason the sibling Moyue project
+         chose it: it is the highest profile the UWP 6.2.x toolchain of this
+         vintage supports without dragging in newer runtime dependencies, and it
+         is low enough that the ARM32 .NET Native toolchain has no trouble with
+         it. Do not raise this: the UWP app project compiles these same sources
+         directly, so the profile is a hard constraint on both sides. -->
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RootNamespace>DesultorySignals.Core</RootNamespace>
+    <AssemblyName>DesultorySignals.Core</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <RestorePackagesPath>../../.packages</RestorePackagesPath>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- The UWP app compiles these same files with the same LangVersion. Keeping
+         the list explicit means adding a file to the core is a visible change in
+         one place rather than an implicit glob. -->
+    <Compile Include="Util.cs" />
+    <Compile Include="Models/JsonValue.cs" />
+    <Compile Include="Models/Models.cs" />
+    <Compile Include="Models/ApiError.cs" />
+    <Compile Include="Diagnostics/Redactor.cs" />
+    <Compile Include="Diagnostics/DiagLog.cs" />
+    <Compile Include="Python/PythonProtocolClient.cs" />
+    <Compile Include="Networking/HttpTransport.cs" />
+    <Compile Include="Networking/RetryPolicy.cs" />
+    <Compile Include="Storage/IFileStore.cs" />
+    <Compile Include="Media/RangeMath.cs" />
+    <Compile Include="Media/RangeCache.cs" />
+    <Compile Include="Media/VideoSourceSelector.cs" />
+    <Compile Include="Media/IRandomAccessByteSource.cs" />
+    <Compile Include="Media/RemoteRandomAccessByteSource.cs" />
+    <Compile Include="Douyin/SessionManager.cs" />
+    <Compile Include="Douyin/DouyinApiClient.cs" />
+    <Compile Include="Services/PlaybackService.cs" />
+    <Compile Include="Services/VideoService.cs" />
+    <Compile Include="Services/CacheService.cs" />
+    <Compile Include="Services/FeedService.cs" />
+    <Compile Include="Services/CommentService.cs" />
+    <Compile Include="Services/HistoryService.cs" />
+    <Compile Include="Services/ServiceHost.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+</Project>

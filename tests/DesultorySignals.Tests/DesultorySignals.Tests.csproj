@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!-- The SDK that is installed on this machine ships the matching runtime, so
+         targeting it avoids depending on a separately installed one. -->
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <AssemblyName>DesultorySignals.Tests</AssemblyName>
+    <RootNamespace>DesultorySignals.Tests</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RestorePackagesPath>../../.packages</RestorePackagesPath>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- The core is compiled from source rather than referenced as a library, for
+         the same reason the UWP app does it: there is exactly one set of sources,
+         so a test can never pass against a stale binary. -->
+    <Compile Include="../../src/DesultorySignals.Core/**/*.cs"
+             Exclude="../../src/DesultorySignals.Core/obj/**;../../src/DesultorySignals.Core/bin/**" />
+    <Compile Include="Fakes.cs" />
+    <Compile Include="TestRunner.cs" />
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+</Project>

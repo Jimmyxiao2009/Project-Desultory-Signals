@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">ARM</Platform>
+    <ProjectGuid>{3E9B1D2A-6C4F-4B8E-9A31-8D7F5C210D44}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DesultorySignals</RootNamespace>
+    <AssemblyName>DesultorySignals</AssemblyName>
+    <DefaultLanguage>zh-CN</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <!-- Signing is done by scripts\build-app.ps1 with signtool, not here.
+         MSBuild 15's AppxPackaging cannot import a modern PFX (it fails with APPX0105
+         "may be password protected" on a file that opens fine everywhere else, because
+         its .NET Framework-era PFX importer predates AES-256 CNG keys). Building
+         unsigned and signing the finished package avoids that entirely, and it keeps
+         the signing step visible and reproducible in one script.
+         The certificate itself is app\DesultorySignals\DesultorySignals_TemporaryKey.pfx
+         (a throwaway development key whose subject matches the manifest Publisher). -->
+    <PackageCertificateKeyFile></PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <!-- Only an ARM32 package is wanted for the Lumia/Windows 10 Mobile 10586 target. -->
+    <AppxBundle>Never</AppxBundle>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
+    <GenerateAppxPackageOnBuild>True</GenerateAppxPackageOnBuild>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppInstallerUpdateFrequency>1</AppInstallerUpdateFrequency>
+    <AppInstallerCheckForUpdateFrequency>OnApplicationRun</AppInstallerCheckForUpdateFrequency>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <!-- Keep the UWPShim/entrypoint Debug layout. This SDK's ARM AppLocal folder
+         contains only the shim, so Microsoft.NET.CoreRuntime.1.1 is still required
+         as a separately installed framework. The shim itself also requires the
+         retail VCLibs framework declared in Package.appxmanifest. -->
+    <UseAppLocalCoreFramework>true</UseAppLocalCoreFramework>
+    <!-- Debug is the verified path on the device; .NET Native adds a variable we do
+         not want in the loop while the Python bridge is still being proven. -->
+    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>7.3</LangVersion>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.14</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <ItemGroup>
+    <!-- The app's own sources. -->
+    <Compile Include="**\*.cs" Exclude="obj\**;bin\**" />
+    <!-- The shared core is compiled in, not referenced: the VS2017 toolchain cannot
+         consume the SDK-style netstandard project, and the core is written to be
+         source-compatible with this LangVersion. -->
+    <Compile Include="..\..\src\DesultorySignals.Core\**\*.cs" Exclude="..\..\src\DesultorySignals.Core\obj\**;..\..\src\DesultorySignals.Core\bin\**" />
+    <Page Include="Views\*.xaml" />
+    <Content Include="Assets\*.png" />
+    <Content Include="Properties\Default.rd.xml" />
+    <!-- The Python protocol package, laid out where the native driver looks for it
+         (runtime_root\AppLib\douyin). -->
+    <Content Include="..\..\python\douyin\*.py" Link="AppLib\douyin\%(Filename)%(Extension)" />
+    <!-- The CPython standard library, laid out as runtime_root\Lib.
+         The import machinery genuinely needs this tree: even with frozen importlib,
+         `encodings` and the bootstrap come from here (documented in the AlterGate
+         handoff), so it is not optional.
+
+         What is excluded is only what can never be imported on this target. The
+         listed directories are 41 MB of the 50 MB tree, almost all of it `test`
+         (35 MB, 1779 files of the CPython test suite), and none of it is reachable
+         from the client or from `diagnostics.selfTest`:
+
+           test         CPython's own test suite
+           ensurepip    bundled wheels; the device uses the port's own local pip
+           idlelib      needs Tk, which does not exist on this platform
+           tkinter      same
+           turtledemo   same
+           pydoc_data   the pydoc help corpus
+           profiling    the 3.15 profiling package; unused
+           _pyrepl      interactive line editor; there is no console
+           lib2to3      deprecated and removed upstream
+           sqlite3      its C module (_sqlite3) is not in the static core
+           ctypes       its C module (_ctypes) is not in the static core
+           unittest     used only by the test suites, which are not shipped
+           multiprocessing / concurrent  no subprocess in an App Container
+           asyncio      not used by this client
+           wsgiref / xmlrpc  server-side helpers; unused
+
+         Everything else stays, including encodings, importlib, json, email, http,
+         urllib, logging, re and the rest of the tree. -->
+    <Content Include="H:\项目\UWP\Python UWP\cpython\Lib\**\*.py"
+             Exclude="H:\项目\UWP\Python UWP\cpython\Lib\test\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\ensurepip\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\idlelib\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\tkinter\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\turtledemo\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\pydoc_data\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\profiling\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\_pyrepl\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\lib2to3\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\sqlite3\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\ctypes\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\unittest\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\multiprocessing\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\concurrent\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\asyncio\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\wsgiref\**\*.py;H:\项目\UWP\Python UWP\cpython\Lib\xmlrpc\**\*.py"
+             Link="Lib\%(RecursiveDir)%(Filename)%(Extension)" />
+    <!-- The embedded interpreter and its zlib dependency, at the package root so
+         DllImport("python-uwp.dll") resolves. -->
+    <Content Include="libs\ARM\python-uwp.dll" Link="python-uwp.dll" />
+    <Content Include="libs\ARM\z.dll" Link="z.dll" />
+  </ItemGroup>
+</Project>

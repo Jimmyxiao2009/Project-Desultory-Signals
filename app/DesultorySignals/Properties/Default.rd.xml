@@ -1,0 +1,12 @@
+<Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
+  <Application>
+    <!-- This assembly is the debug shell: every branch is meant to be reachable from
+         the UI, and nothing here is worth trimming for size. -->
+    <Assembly Name="*Application*" Dynamic="Required All" />
+
+    <!-- Newtonsoft.Json builds and reads JObject graphs reflectively. The Core layer
+         leans on it for every protocol payload, so trimming it would fail at the
+         first bridge response rather than at compile time. -->
+    <Assembly Name="Newtonsoft.Json" Dynamic="Required All" />
+  </Application>
+</Directives>

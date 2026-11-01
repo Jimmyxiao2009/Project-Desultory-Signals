@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         IgnorableNamespaces="uap mp">
+  <Identity Name="DesultorySignals.DebugShell" Publisher="CN=DesultorySignals" Version="0.1.0.14" />
+  <mp:PhoneIdentity PhoneProductId="3e9b1d2a-6c4f-4b8e-9a31-8d7f5c210d44" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>抖音核心调试壳</DisplayName>
+    <PublisherDisplayName>DesultorySignals</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10586.0" MaxVersionTested="10.0.19041.0" />
+    <!-- UWPShim, Python and zlib import the retail ARM32 VC runtime. -->
+    <PackageDependency Name="Microsoft.VCLibs.140.00" MinVersion="14.0.27323.0"
+                       Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="zh-CN" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="DesultorySignals.App">
+      <uap:VisualElements DisplayName="抖音核心调试壳" Description="Project-Desultory-Signals 第一阶段调试壳"
+                          BackgroundColor="#101010"
+                          Square150x150Logo="Assets\Square150x150Logo.png"
+                          Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <Capability Name="privateNetworkClientServer" />
+  </Capabilities>
+</Package>
